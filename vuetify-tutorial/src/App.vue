@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar>
-      <v-toolbar-title>Asuforce gallery</v-toolbar-title>
+      <Avatar/>
     </v-toolbar>
     <main>
       <v-container fluid>
@@ -16,21 +16,18 @@
 </template>
 
 <script>
-import Gallary from "./components/Gallary";
+import Avatar from "./components/Avatar";
 import Carousel from "./components/Carousel";
+import Gallary from "./components/Gallary";
 import Message from "./components/Message";
 
 export default {
   name: "App",
   components: {
-    Gallary,
+    Avatar,
     Carousel,
+    Gallary,
     Message
-  },
-  data() {
-    return {
-      //
-    };
   }
 };
 </script>
