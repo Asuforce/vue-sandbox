@@ -6,7 +6,7 @@
           <v-container fill-height fluid>
             <v-layout fill-height>
               <v-flex xs12 align-end flexbox>
-                <span class="headline">Asuforce Garally</span>
+                <span class="display-3">Asuforce Garally</span>
               </v-flex>
             </v-layout>
           </v-container>
