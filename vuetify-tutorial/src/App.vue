@@ -5,7 +5,9 @@
     </v-toolbar>
     <main>
       <v-container fluid>
+        <Message/>
         <Gallary/>
+        <Carousel/>
         <router-view></router-view>
       </v-container>
     </main>
@@ -15,11 +17,15 @@
 
 <script>
 import Gallary from "./components/Gallary";
+import Carousel from "./components/Carousel";
+import Message from "./components/Message";
 
 export default {
   name: "App",
   components: {
-    Gallary
+    Gallary,
+    Carousel,
+    Message
   },
   data() {
     return {
