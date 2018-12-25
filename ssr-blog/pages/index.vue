@@ -12,13 +12,19 @@
         </div>
       </div>
     </section>
+    <Posts />
   </div>
 </template>
 
 <script>
-  export default {
-    head: {
-      title: 'Home'
-    }
+import Posts from '~/components/Posts.vue'
+
+export default {
+  components: {
+    Posts
+  },
+  head: {
+    title: 'Home'
   }
+}
 </script>
