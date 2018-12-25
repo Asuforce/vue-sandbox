@@ -3,8 +3,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    titleTe,
-    plate: "%s | Awesome JS SSR Blog",
+    titleTemplate: "%s | Awesome JS SSR Blog",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
