@@ -1,10 +1,10 @@
 # ssr-blog
 
-> Nuxt.js project
+This app based on [Nuxt.js: A Universal Vue.js Application Framework — SitePoint](https://www.sitepoint.com/nuxt-js-universal-vue-js/)
 
 ## Build Setup
 
-``` bash
+```sh
 # install dependencies
 $ npm install # Or yarn install
 
@@ -20,4 +20,3 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
-
