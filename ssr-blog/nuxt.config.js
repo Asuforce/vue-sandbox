@@ -39,5 +39,12 @@ module.exports = {
         });
       }
     }
+  },
+  generate: {
+    route(callback) {
+      const posts = require('./posts.json')
+      const routes = posts.map(post => `/post/${post.id}`)
+      callback(null, routes)
+    }
   }
 };
