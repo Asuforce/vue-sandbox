@@ -23,4 +23,10 @@ var vm = new Vue({
   },
 });
 
+vm.$watch(function () {
+  return this.items[0].quantity
+}, function (quantity) {
+    console.log(quantity)
+})
+
 window.vm = vm
