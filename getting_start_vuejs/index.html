@@ -1,8 +1,13 @@
-<!DOCTYPE html> <title>はじめてのVue.js</title>
-<script src="https://unpkg.com/vue@2.5.17"></script>
-<div id="app"></div>
-<script>
-  new Vue({ template: "<p>{{msg}}</p>", data: { msg: "helloworld!" } }).$mount(
-    "#app"
-  );
-</script>
+<!DOCTYPE html>
+<head>
+  <title>はじめてのVue.js</title>
+  <script src="https://unpkg.com/vue@2.5.17"></script>
+</head>
+<body>
+  <div id="app">
+    <p>{{ items[0].name }}: {{ items[0].price }} × {{ items[0].quantity }}</p>
+    <p>小計: {{ totalPrice | numberWithDelimiter }}円</p>
+    <p>合計（税込み）: {{ totalPriceWithTax | numberWithDelimiter }}円</p>
+  </div>
+  <script src="./app.js"></script>
+</body>
