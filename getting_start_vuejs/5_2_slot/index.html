@@ -7,5 +7,17 @@
     <title>Slot</title>
     <script src="https://unpkg.com/vue@2.5.17"></script>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <my-button>Send</my-button>
+      <my-button></my-button>
+    </div>
+
+    <script type="text/x-template" id="my-button">
+      <button>
+        <slot>OK</slot>
+      </button>
+    </script>
+    <script src="app.js"></script>
+  </body>
 </html>
