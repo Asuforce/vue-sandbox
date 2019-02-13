@@ -10,8 +10,13 @@
   </head>
   <body>
     <div id="app">
-      <router-link to="/top">トップページ</router-link>
-      <router-link to="/users">ユーザー一覧ページ</router-link>
+      <nav>
+        <router-link to="/top">Top page</router-link>
+        <router-link to="/users">List Users</router-link>
+        <router-link to="/users/new?redirect=true">Create User</router-link>
+        <router-link to="/login" v-show="!Auth.loggedIn()">Login</router-link>
+        <router-link to="/logout" v-show="Auth.loggedIn()">Logout</router-link>
+      </nav>
       <router-view></router-view>
     </div>
 
@@ -60,7 +65,71 @@
         </div>
       </div>
     </script>
+    <script type="text/x-template" id="login">
+      <div>
+        <h2>Login</h2>
+        <p v-if="$route.query.redirect">
+          Please Login
+        </p>
+        <form @submit.prevent="login">
+          <label><input v-model="email" placeholder="email"></label>
+          <label><input v-model="pass" placeholder="password"></label><br>
+          <button type="submit">Login</button>
+          <p v-if="error" class="error">Failed login</p>
+        </form>
+      </div>
+    </script>
     <script>
+      var Auth = {
+        login: function(email, pass, cd) {
+          setTimeout(function() {
+            if (email === "vue@example.com" && pass === "vue") {
+              localStorage.token = Math.random()
+                .toString(36)
+                .substring(7);
+              if (cd) {
+                cd(true);
+              }
+            } else {
+              if (cd) {
+                cd(false);
+              }
+            }
+          });
+        },
+        logout: function() {
+          delete localStorage.token;
+        },
+        loggedIn: function() {
+          return !!localStorage.token;
+        }
+      };
+
+      var Login = {
+        template: "#login",
+        data() {
+          return {
+            email: "vue@example.com",
+            pass: "",
+            error: false
+          };
+        },
+        methods: {
+          login: function() {
+            Auth.login(
+              this.email,
+              this.pass,
+              function(loggedIn) {
+                if (!loggedIn) {
+                  this.error = true;
+                } else {
+                  this.$router.replace(this.$route.query.redirect || "/");
+                }
+              }.bind(this)
+            );
+          }
+        }
+      };
       var postUser = function(params, callback) {
         setTimeout(function() {
           params.id = userData.length + 1;
@@ -220,17 +289,41 @@
           },
           {
             path: "/users/new",
-            component: UserCreate
+            component: UserCreate,
+            beforeEnter: function(to, from, next) {
+              if (!Auth.loggedIn()) {
+                next({
+                  path: "/login",
+                  query: { redirect: to.fullPath }
+                });
+              } else {
+                next();
+              }
+            }
           },
           {
             path: "/users/:userId",
             component: UserDetail
+          },
+          {
+            path: "/login",
+            component: Login
+          },
+          {
+            path: "/logout",
+            beforeEnter: function(to, from, next) {
+              Auth.logout();
+              next("/");
+            }
           }
         ]
       });
 
       var app = new Vue({
-        router: router
+        router: router,
+        data: {
+          Auth: Auth
+        }
       }).$mount("#app");
     </script>
   </body>
