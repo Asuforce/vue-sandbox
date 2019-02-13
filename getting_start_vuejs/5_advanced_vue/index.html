@@ -5,16 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Advanced vue</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.min.js"></script>
     <script src="https://unpkg.com/vue@2.5.17"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div id="app">
-      <button @click="isShown = !isShown">Toggle display</button>
-      <transition>
-        <p v-show="isShown">Hello, world!</p>
-      </transition>
+      <pull-down-menu></pull-down-menu>
     </div>
+    <script type="text/x-template" id="pull-down-menu">
+      <div @mouseleave="isShown = false">
+        <p @mouseover="isShown = true">
+          <a href="#" class="menu">{{ name }}</a>
+        </p>
+        <transition @before-enter="beforeEnter" @enter="enter" @leave="leave" :css="false">
+          <ul v-if="isShown">
+            <li v-for="item in items" :keys="item">
+              <a href="#" class="menu-item">{{ item }}</a>
+            </li>
+          </ul>
+        </transition>
+      </div>
+    </script>
     <script src="app.js"></script>
   </body>
 </html>
