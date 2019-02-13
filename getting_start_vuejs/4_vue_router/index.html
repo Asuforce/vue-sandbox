@@ -14,7 +14,15 @@
       <router-link to="/users">ユーザー一覧ページ</router-link>
       <router-view></router-view>
     </div>
+
+    <script type="text/x-template" id="user-list">
+      <div>ユーザー一覧ページです。</div>
+    </script>
     <script>
+      var UserList = {
+        template: "#user-list"
+      };
+
       var router = new VueRouter({
         routes: [
           {
@@ -25,9 +33,7 @@
           },
           {
             path: "/users",
-            component: {
-              template: "<div>ユーザー一覧ページです。</div>"
-            }
+            component: UserList
           }
         ]
       });
