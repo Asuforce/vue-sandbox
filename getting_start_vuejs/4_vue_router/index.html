@@ -27,7 +27,7 @@
           {{ error }}
         </div>
         <div v-for="user in users" :key="user.id">
-          <h2>{{ user.name }}</h2>
+          <h2><router-link :to="{ path: `/users/${user.id}` }">{{ user.name }}</router-link></h2>
         </div>
       </div>
     </script>
