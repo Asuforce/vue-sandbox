@@ -26,21 +26,79 @@
         </div>
       </div>
     </script>
+    <script type="text/x-template" id="user-detail">
+      <div>
+        <div class="loading" v-if="loading">Loading...</div>
+        <div v-if="error" class="error">
+          {{ error }}
+        </div>
+        <div v-if="user">
+          <h2>{{ user.name }}</h2>
+          <p>{{ user.descripton }}</p>
+        </div>
+      </div>
+    </script>
     <script>
-      var getUsers = function(callback) {
+      var userData = [
+        {
+          id: 1,
+          name: "Takuya Tejima",
+          descripton: "I am Engineer in Southeast Asia."
+        },
+        {
+          id: 2,
+          name: "Yohei Noda",
+          descripton: "I am Engineer and I like outdoor."
+        }
+      ];
+      var getUser = function(userId, callback) {
         setTimeout(function() {
-          callback(null, [
-            {
-              id: 1,
-              name: "Takuya Tejima"
-            },
-            {
-              id: 2,
-              name: "Yohei Noda"
-            }
-          ]);
+          var filteredUsers = userData.filter(function(user) {
+            return user.id === parseInt(userId, 10);
+          });
+          callback(null, filteredUsers && filteredUsers[0]);
         }, 1000);
       };
+
+      var UserDetail = {
+        template: "#user-detail",
+        data() {
+          return {
+            loading: false,
+            user: null,
+            error: null
+          };
+        },
+        created() {
+          this.fetchData();
+        },
+        watch: {
+          $route: "fetchData"
+        },
+        methods: {
+          fetchData() {
+            this.loading = true;
+            getUser(
+              this.$route.params.userId,
+              function(err, user) {
+                this.loading = false;
+                if (err) {
+                  this.error = err.toString();
+                } else {
+                  this.user = user;
+                }
+              }.bind(this)
+            );
+          }
+        }
+      };
+
+      var getUsers = function(callback) {
+        setTimeout(function() {
+          callback(null, userData);
+        }, 1000);
+      };
+
       var UserList = {
         template: "#user-list",
         data() {
@@ -53,22 +111,24 @@
           };
         },
         created: function() {
-          this.fetchData()
+          this.fetchData();
         },
         watch: {
-          '$route': 'fetchData'
+          $route: "fetchData"
         },
         methods: {
           fetchData: function() {
-            this.loading = true
-            getUsers((function (err, users) {
-              this.loading = false
-              if (err) {
-                this.error = err.toString()
-              } else {
-                this.users = users
-              }
-            }).bind(this))
+            this.loading = true;
+            getUsers(
+              function(err, users) {
+                this.loading = false;
+                if (err) {
+                  this.error = err.toString();
+                } else {
+                  this.users = users;
+                }
+              }.bind(this)
+            );
           }
         }
       };
@@ -84,6 +144,10 @@
           {
             path: "/users",
             component: UserList
+          },
+          {
+            path: "/users/:userId",
+            component: UserDetail
           }
         ]
       });
