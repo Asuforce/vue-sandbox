@@ -6,7 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Vue Router</title>
     <script src="https://unpkg.com/vue@2.5.17"></script>
-    <script src="https://unpkg.com/vuerouter@2.0.1"></script>
+    <script src="https://unpkg.com/vue-router@3.0.2/dist/vue-router.js"></script>
   </head>
-  <body></body>
+  <body>
+    <div id="app">
+      <router-link to="/top">トップページ</router-link>
+      <router-link to="/users">ユーザー一覧ページ</router-link>
+      <router-view></router-view>
+    </div>
+    <script>
+      var router = new VueRouter({
+        routes: [
+          {
+            path: "/top",
+            component: {
+              template: "<div>トップページ</div>"
+            }
+          },
+          {
+            path: "/users",
+            component: {
+              template: "<div>ユーザー一覧ページです。</div>"
+            }
+          }
+        ]
+      });
+
+      var app = new Vue({
+        router: router
+      }).$mount("#app");
+    </script>
+  </body>
 </html>
