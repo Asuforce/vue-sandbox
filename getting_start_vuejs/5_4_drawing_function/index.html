@@ -14,17 +14,6 @@
       <my-button>button</my-button>
     </div>
 
-    <script type="text/x-template" id="my-button">
-      <a v-if="(!tag && href) || tag === 'a'" :href="href || '#'">
-        <slot></slot>
-      </a>
-      <span v-else-if="tag === 'span'">
-        <slot></slot>
-      </span>
-      <button v-else>
-        <slot></slot>
-      </button>
-    </script>
     <script src="app.js"></script>
   </body>
 </html>
