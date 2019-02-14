@@ -9,7 +9,7 @@
   </head>
   <body>
     <div id="app">
-      <img v-fallback-image src="./logo.png" :alt="altText" />
+      <img v-fallback-image.once="noImageURL" src="./logo2.png" :alt="altText" />
     </div>
 
     <script src="app.js"></script>
