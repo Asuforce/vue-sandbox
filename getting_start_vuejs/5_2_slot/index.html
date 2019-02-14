@@ -9,14 +9,27 @@
   </head>
   <body>
     <div id="app">
-      <my-button>Send</my-button>
-      <my-button></my-button>
+      <my-page>
+        <h1 slot="header">This is my page</h1>
+        <p>
+          Hoge hoge hoge hoge
+        </p>
+        <p slot="footer">This is footer</p>
+      </my-page>
     </div>
 
-    <script type="text/x-template" id="my-button">
-      <button>
-        <slot>OK</slot>
-      </button>
+    <script type="text/x-template" id="my-page">
+      <div>
+        <header>
+          <slot name="header">OK</slot>
+        </header>
+        <main>
+          <slot></slot>
+        </main>
+        <footer>
+          <slot name="footer"></slot>
+        </footer>
+      </div>
     </script>
     <script src="app.js"></script>
   </body>

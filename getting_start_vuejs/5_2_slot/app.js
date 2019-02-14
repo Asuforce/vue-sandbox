@@ -1,10 +1,10 @@
-var MyButton = {
-  template: "#my-button"
+var MyPage = {
+  template: "#my-page"
 };
 
 new Vue({
   el: '#app',
   components: {
-    MyButton: MyButton
+    MyPage: MyPage
   }
 })
