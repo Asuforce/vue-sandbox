@@ -6,7 +6,7 @@
         <input type="checkbox" v-bind:checked="task.done" v-on:change="toggleTaskStatus(task)">
         {{ task.name }}
         <span
-          v-for="id in task.labels"
+          v-for="id in task.labelIds"
           v-bind:key="id"
         >{{ getLabelText(id) }}</span>
       </li>
@@ -27,6 +27,22 @@
     <form v-on:submit.prevent="addLabel">
       <input type="text" v-model="newLabelText" placeholder="New label">
     </form>
+
+    <h2>Label filter</h2>
+    <ul>
+      <li v-for="label in labels" v-bind:key="label.id">
+        <input
+          type="radio"
+          v-bind:checked="label.id === filter"
+          v-on:change="changeFilter(label.id)"
+        >
+        {{ label.text }}
+      </li>
+      <li>
+        <input type="radio" v-bind:checked="filter === null" v-on:change="changeFilter(null)">
+        Not filter
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -41,10 +57,13 @@ export default {
   },
   computed: {
     tasks() {
-      return this.$store.state.tasks;
+      return this.$store.getters.filteredTasks;
     },
     labels() {
       return this.$store.state.labels;
+    },
+    filter() {
+      return this.$store.state.filter;
     }
   },
   methods: {
@@ -62,14 +81,19 @@ export default {
       });
     },
     addLabel() {
-      this.$store.commit('addLabel', {
+      this.$store.commit("addLabel", {
         text: this.newLabelText
-      })
-      this.newLabelText = ""
+      });
+      this.newLabelText = "";
     },
     getLabelText(id) {
-      const label = this.labels.filter(label => label.id === id)[0]
-      return label ? label.text: ''
+      const label = this.labels.filter(label => label.id === id)[0];
+      return label ? label.text : "";
+    },
+    changeFilter(labelId) {
+      this.$store.commit("changeFilter", {
+        filter: labelId
+      });
     }
   }
 };
