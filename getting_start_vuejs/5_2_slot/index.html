@@ -9,27 +9,21 @@
   </head>
   <body>
     <div id="app">
-      <my-page>
-        <h1 slot="header">This is my page</h1>
-        <p>
-          Hoge hoge hoge hoge
-        </p>
-        <p slot="footer">This is footer</p>
-      </my-page>
+      <todo-list :todos="todos">
+        <li slot-scope="{ todo }" v-if="todo.isCompleted">
+          {{ todo.text }}
+        </li>
+      </todo-list>
     </div>
 
-    <script type="text/x-template" id="my-page">
-      <div>
-        <header>
-          <slot name="header">OK</slot>
-        </header>
-        <main>
-          <slot></slot>
-        </main>
-        <footer>
-          <slot name="footer"></slot>
-        </footer>
-      </div>
+    <script type="text/x-template" id="todo-list">
+      <ul>
+        <template v-for="todo in todos">
+          <slot :todo="todo">
+            <li :key="todo.id">{{ todo.text }}</li>
+          </slot>
+        </template>
+      </ul>
     </script>
     <script src="app.js"></script>
   </body>
