@@ -1,0 +1,17 @@
+{
+  "name": "7_7_vuex_and_vue_component",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "vue": "^2.6.6",
+    "vuex": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "vue serve --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
