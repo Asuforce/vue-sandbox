@@ -3,61 +3,36 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-function getCountNum(type) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      let amount;
-      switch (type) {
-        case "one":
-          amount = 1;
-          break;
-        case "two":
-          amount = 2;
-          break;
-        case "ten":
-          amount = 10;
-          break;
-        default:
-          amount = 0;
-      }
-      resolve({ amount });
-    }, 1000);
-  });
-}
-
-const counter = {
+const store = new Vuex.Store({
   state: {
-    count: 10
+    count: 1
   },
   getters: {
-    squared: state => state.count * state.count
+    double: state => state.count * 2
   },
   mutations: {
-    increment(state, amount) {
-      state.count += amount;
-    }
-  },
-  actions: {
-    incrementAsync({ commit }, payload) {
-      return getCountNum(payload.type).then(data => {
-        commit("increment", {
-          amount: data.amount
-        });
-      });
+    update(state, payload) {
+      state.count = payload;
     }
   },
   modules: {
-    childModule: {}
-  }
-};
-
-const store = new Vuex.Store({
-  modules: {
-    counter
+    example: {
+      namespaced: true,
+      getters: {
+        triple: (state, getters, rootState, rootGetters) => {
+          return rootState.count + rootGetters.double;
+        }
+      },
+      actions: {
+        multiplyByFive(ctx) {
+          const payload = ctx.rootGetters.double + ctx.getters.triple;
+          ctx.commit("update", payload, { root: true });
+        }
+      }
+    }
   }
 });
 
-console.log(store.state.counter.count);
-console.log(store.getters.squared);
-store.commit("increment", 5);
-store.dispatch("incrementAsync", { type: "one" });
+console.log(store.state.count);
+store.dispatch("example/multiplyByFive");
+console.log(store.state.count);
